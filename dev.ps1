@@ -25,7 +25,7 @@ $useWT = $null -ne (Get-Command wt -ErrorAction SilentlyContinue)
 
 if ($useWT) {
     Write-Host "[INFO] Abrindo no Windows Terminal..." -ForegroundColor Cyan
-    $backendCmd  = "Set-Location '$Root'; uvicorn app.main:app --reload --port 8000"
+    $backendCmd  = "Set-Location '$Root'; uvicorn app.main:app --reload --port 7000"
     $frontendCmd = "Set-Location '$Root\frontend'; npm run dev"
     wt `
         --title "ON Backend" powershell -NoExit -Command $backendCmd `; `
@@ -33,15 +33,15 @@ if ($useWT) {
 } else {
     Write-Host "[INFO] Abrindo em janelas PowerShell separadas..." -ForegroundColor Cyan
     Start-Process powershell -ArgumentList "-NoExit", "-Command",
-        "Set-Location '$Root'; Write-Host 'BACKEND — http://localhost:8000' -ForegroundColor Cyan; uvicorn app.main:app --reload --port 8000"
+        "Set-Location '$Root'; Write-Host 'BACKEND — http://localhost:7000' -ForegroundColor Cyan; uvicorn app.main:app --reload --port 7000"
     Start-Sleep -Milliseconds 500
     Start-Process powershell -ArgumentList "-NoExit", "-Command",
-        "Set-Location '$Root\frontend'; Write-Host 'FRONTEND — http://localhost:5173' -ForegroundColor Green; npm run dev"
+        "Set-Location '$Root\frontend'; Write-Host 'FRONTEND — http://localhost:5123' -ForegroundColor Green; npm run dev"
 }
 
 Write-Host ""
 Write-Host "Servicos iniciados:" -ForegroundColor Green
-Write-Host "  Backend   http://localhost:8000"
-Write-Host "  Frontend  http://localhost:5173"
-Write-Host "  API Docs  http://localhost:8000/docs"
+Write-Host "  Backend   http://localhost:7000"
+Write-Host "  Frontend  http://localhost:5123"
+Write-Host "  API Docs  http://localhost:7000/docs"
 Write-Host ""

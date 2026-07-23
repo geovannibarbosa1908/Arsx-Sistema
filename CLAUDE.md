@@ -14,10 +14,10 @@ Diretório B2B genérico freemium: qualquer empresa pode se cadastrar e ser enco
 
 ```bash
 # Backend (D:\OpenNetworking)
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --reload --port 7000
 
 # Frontend (D:\OpenNetworking\frontend)
-npm run dev   # http://localhost:5173
+npm run dev   # http://localhost:5123
 ```
 
 Ou rode `dev.ps1` na raiz para abrir os dois de uma vez.
