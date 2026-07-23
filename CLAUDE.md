@@ -1,14 +1,26 @@
-# ABPL Member Directory
+# Open Networking
 
-Diretório B2B para freight forwarders, prestadores de serviços e vendedores de equipamentos. Duas personas: **Supplier** (paga para ser listado) e **Buyer** (paga para buscar e contactar). Produto SaaS próprio.
+Diretório B2B genérico freemium: qualquer empresa pode se cadastrar e ser encontrada. Modelo free/pro/business — contatos gatados por assinatura ativa.
 
 ## Stack
 
 - **Backend:** FastAPI + SQLAlchemy 2.0 + Pydantic v2 + Alembic + PostgreSQL (Supabase)
 - **Pagamentos:** Stripe (USD, assinaturas mensais)
 - **Email:** Resend
-- **Frontend produção:** React 19 + Vite + Tailwind (`/frontend`) — **conectado à API real, deploy no Render (static site)**
+- **Frontend:** React 19 + Vite + Tailwind (`/frontend`) — deploy no Render (static site)
 - **Deploy:** Render — backend (Docker) + frontend (static) via `render.yaml`
+
+## Dev local
+
+```bash
+# Backend (D:\OpenNetworking)
+uvicorn app.main:app --reload --port 8000
+
+# Frontend (D:\OpenNetworking\frontend)
+npm run dev   # http://localhost:5173
+```
+
+Ou rode `dev.ps1` na raiz para abrir os dois de uma vez.
 
 ## Arquitetura Backend
 
@@ -16,34 +28,32 @@ Diretório B2B para freight forwarders, prestadores de serviços e vendedores de
 
 ```
 app/
-  core/      config.py, database.py, security.py, limiter.py
-  models/    company.py, subscription.py, quote.py, admin_user.py, company_event.py
-  schemas/   company.py, subscription.py, quote.py
+  core/          config.py, database.py, security.py, limiter.py
+  models/        company.py, subscription.py, quote.py, admin_user.py, company_event.py
+  schemas/       company.py, subscription.py, quote.py
   repositories/  company.py, subscription.py, quote.py
-  services/  company.py, stripe_service.py, event_service.py, email_service.py
-  routers/   companies.py, subscriptions.py, quotes.py, admin.py, auth.py
+  services/      company.py, stripe_service.py, event_service.py, email_service.py
+  routers/       companies.py, subscriptions.py, quotes.py, admin.py, auth.py
   main.py
 ```
 
 ## Arquitetura Frontend
 
 ```
-frontend/
-  src/
-    lib/        api.ts  ← cliente HTTP + tipos TypeScript da API
-                auth.ts ← getToken / setToken / removeToken
-    contexts/   AuthContext.tsx ← isAuthenticated, company, login, logout
-    components/ Header.tsx, CompanyCard.tsx, PlanCard.tsx
-    pages/      HomePage.tsx, DirectoryPage.tsx, CompanyProfilePage.tsx
-                RegisterPage.tsx, PlansPage.tsx, LoginPage.tsx
-                ForgotPasswordPage.tsx, ResetPasswordPage.tsx
-                QuotesPage.tsx, AdminPage.tsx, ProfilePage.tsx
-                PaymentSuccessPage.tsx
-    data/       mock.ts  ← apenas listas estáticas (SPECIALTIES, COUNTRIES)
-  .env.example  ← VITE_API_URL=http://localhost:8000
+frontend/src/
+  lib/        api.ts  ← cliente HTTP + tipos TypeScript
+              auth.ts ← getToken / setToken / removeToken (localStorage: on_token, on_company)
+  contexts/   AuthContext.tsx ← isAuthenticated, company, login, logout
+  components/ Header.tsx, CompanyCard.tsx, PlanCard.tsx
+  pages/      HomePage.tsx, DirectoryPage.tsx, CompanyProfilePage.tsx
+              RegisterPage.tsx, PlansPage.tsx, LoginPage.tsx
+              ForgotPasswordPage.tsx, ResetPasswordPage.tsx
+              QuotesPage.tsx, AdminPage.tsx, ProfilePage.tsx
+              PaymentSuccessPage.tsx
+  data/       mock.ts ← INDUSTRIES, COUNTRIES, TESTIMONIALS, PLANS (listas estáticas)
 ```
 
-## Endpoints disponíveis
+## Endpoints
 
 | Método | Rota | Auth | Descrição |
 |--------|------|------|-----------|
@@ -52,15 +62,15 @@ frontend/
 | POST | `/api/auth/forgot-password` | — | Envia link de reset |
 | POST | `/api/auth/reset-password` | — | Reseta senha via token |
 | POST | `/api/companies` | — | Cadastrar empresa |
-| GET | `/api/companies` | JWT | Buscar empresas (country, city, specialty, type) |
+| GET | `/api/companies` | JWT | Buscar empresas (country, city, industry, tag) |
 | GET | `/api/companies/{slug}` | JWT | Perfil público — contato gateado por subscription |
 | PATCH | `/api/companies/{company_id}` | JWT (próprio) | Atualizar empresa |
 | GET | `/api/subscriptions/plans` | — | Listar planos e preços |
 | POST | `/api/subscriptions/checkout/{company_id}` | — | Criar sessão Stripe Checkout |
 | POST | `/api/subscriptions/webhook` | Stripe sig | Webhook Stripe |
-| POST | `/api/quotes/{buyer_company_id}` | JWT | Enviar RFQ (qualquer tipo de empresa) |
-| GET | `/api/quotes/received/{supplier_id}` | JWT | RFQs recebidos |
-| GET | `/api/quotes/sent/{buyer_id}` | JWT | RFQs enviados |
+| POST | `/api/quotes/{buyer_company_id}` | JWT | Enviar mensagem/RFQ |
+| GET | `/api/quotes/received/{company_id}` | JWT | Mensagens recebidas |
+| GET | `/api/quotes/sent/{company_id}` | JWT | Mensagens enviadas |
 | POST | `/api/admin/login` | — | Login admin; retorna JWT 8h com role |
 | POST | `/api/admin/setup` | — | Cria primeiro super_admin (bloqueado se já existe) |
 | GET | `/api/admin/companies` | Admin JWT | Lista todas as empresas |
@@ -74,12 +84,20 @@ frontend/
 
 ## Planos Stripe (USD/mês)
 
-| Plan ID | Nome | Preço |
-|---------|------|-------|
-| supplier_basic | Supplier Basic | $49 |
-| supplier_premium | Supplier Premium | $99 |
-| buyer_basic | Buyer Basic | $29 |
-| buyer_premium | Buyer Premium | $79 |
+| Plan ID | Nome | Preço | Acesso |
+|---------|------|-------|--------|
+| — | Free | $0 | Perfil visível, sem acesso a contatos |
+| pro | Pro | $29 | Ver contatos + enviar mensagens |
+| business | Business | $79 | Pro + listing em destaque + analytics |
+
+Free não passa pelo Stripe — cadastro vai direto para login.
+
+## Modelo de dados (diferenças do ABPL)
+
+- `Company.industry` (String, nullable) em vez de `company_type` (Enum)
+- `CompanyProfile.tags` (JSON) em vez de `specialties/transport_modes/cargo_types/trade_lanes`
+- `PlanType`: `pro` | `business` (sem supplier_*/buyer_*)
+- Sem CORS para Wix — apenas `FRONTEND_URL` env var
 
 ## Status da implementação
 
@@ -87,76 +105,65 @@ frontend/
 
 **Core Backend:**
 - Models SQLAlchemy: Company, CompanyProfile, Subscription, Quote, AdminUser, CompanyEvent
-- Schemas Pydantic v2 com validação de URL (SSRF prevention) em todos os campos de URL
+- Schemas Pydantic v2 com SSRF prevention em todos os campos de URL
 - Repositories com try/except + rollback
 - CompanyService, StripeService, event_service, email_service (Resend)
 - Routers: companies, subscriptions, quotes, admin, auth
-- Core: config, database, JWT security (company 30d + admin 8h + reset token)
-- Alembic configurado (env.py) + migration de `role` em admin_users
+- Core: config, database, JWT (company 30d + admin 8h + reset token 15min)
+- Alembic: migration inicial limpa (`alembic/versions/0001_initial.py`)
 - Docker + docker-compose
-- CORS para Wix (`*.wixsite.com`, `*.wix.com`) + `FRONTEND_URL` env var
+- Rate limiting (slowapi), security headers, gating de contato
 
 **Auth:**
-- Login/logout com JWT 30 dias
-- Forgot password + reset password (token 1h via Resend)
-- `hadToken` pattern — não redireciona para login quando não há token, só quando token é rejeitado
+- Login/logout JWT 30 dias
+- Forgot password + reset password via Resend
+- `hadToken` pattern — redireciona para login só quando token é rejeitado
 
 **Admin:**
-- Login com JWT 8h contendo `admin_role`
-- Super Admin: cria/edita/desativa outros admins
-- Aprovação e suspensão de empresas
-- Timeline de eventos por empresa
-
-**Segurança:**
-- Rate limiting (slowapi): login 5/min, forgot-password 3/min, reset 5/min, admin/login 5/min, admin/setup 3/h, POST /companies 5/h
-- Gating de contato: phone/email/website/linkedin/instagram nulificados para não-assinantes; `contact_visible: bool` no response
-- Validação de URL: rejeita não-HTTP e IPs privados/loopback em logo_url, banner_url, website, linkedin_url, instagram_url
-- Headers HTTP: X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy; em produção: HSTS + CSP
+- Login JWT 8h com `admin_role` claim
+- Super Admin: gerencia outros admins
+- Aprovação/suspensão de empresas + timeline de eventos
 
 **Frontend:**
-- 10 páginas: Home, Directory, CompanyProfile, Register, Plans, Login, ForgotPassword, ResetPassword, Quotes, Admin, Profile, PaymentSuccess
-- `AuthContext` com persistência em localStorage
-- Seção de depoimentos na homepage
-- `/payment-success` com resumo do plano e próximos passos
-- Link Admin sempre visível no header (desktop + mobile)
-- RFQs: qualquer tipo de empresa pode enviar (buyer e supplier)
-- Contato na página de perfil: dados reais para assinantes, lock overlay para não-assinantes
+- 11 páginas: Home, Directory, CompanyProfile, Register, Plans, Login, ForgotPassword, ResetPassword, Quotes, Admin, Profile, PaymentSuccess
+- Cadastro freemium: free vai para login direto, pro/business vai para Stripe
+- `AuthContext` com persistência em `on_token` / `on_company`
+- Filtros no diretório: country, city, industry
+- Contato: bloqueado (blur overlay) para não-assinantes
 
 **Deploy:**
-- `render.yaml` com `abpl-api` (Docker) + `abpl-frontend` (static)
-- CORS inclui `https://abpl.onrender.com`
+- `render.yaml`: `on-api` (Docker) + `on-frontend` (static)
 
 ### ❌ Pendente — Infraestrutura (bloqueante para pagamentos)
 
-- [ ] Criar produtos/preços no Stripe e copiar Price IDs para env vars do Render
+- [ ] Criar conta/projeto no Supabase e rodar `alembic upgrade head`
+- [ ] Criar produtos Pro + Business no Stripe → copiar Price IDs para `.env`
 - [ ] Setar `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET` no Render
-- [ ] Configurar webhook Stripe no dashboard → `https://abpl-api.onrender.com/api/subscriptions/webhook`
-- [ ] Configurar Resend: `RESEND_API_KEY` + `EMAIL_FROM` no Render
-
-### ❌ Pendente — Segurança (médio prazo)
-
-- [ ] Verificação de email no cadastro (depende do Resend)
-- [ ] JWT sem revogação — sem blacklist/refresh token; token de 30d fica válido até expirar
-- [ ] Complexidade de senha — só valida ≥ 8 chars, sem regras de força
-- [ ] Auditoria de acesso: timeline registra ações mas não quem acessou o perfil de quem
+- [ ] Configurar webhook Stripe → `https://on-api.onrender.com/api/subscriptions/webhook`
+- [ ] Configurar Resend: `RESEND_API_KEY` + `EMAIL_FROM`
 
 ### ❌ Pendente — Backend
 
-- [ ] Serviço de email: notificações de cadastro, aprovação, quote recebido
-- [ ] `PATCH /api/companies/{id}` sem validação de status da empresa
-- [ ] `ADMIN_KEY` env var separada do `SECRET_KEY`
+- [ ] Filtrar diretório só por empresas com `subscription.status == active` (hoje mostra todas active independente de plano)
+- [ ] Emails de notificação: cadastro recebido, aprovação, mensagem recebida
+- [ ] `PATCH /api/companies/{id}` sem validação de status da empresa (permite editar empresa suspensa)
 - [ ] Mover lógica de quotes do router para `QuoteService`
-- [ ] Filtrar diretório só por empresas com `subscription.status == active`
 
 ### ❌ Pendente — Frontend
 
-- [ ] Dashboard do membro (editar perfil, ver status da assinatura, cancelar)
-- [ ] Vincular `/payment-success` ao Stripe (depende dos Price IDs configurados)
+- [ ] Dashboard do membro: status da assinatura, link para gerenciar/cancelar no Stripe
+- [ ] Vincular `/payment-success` ao plano real via Stripe session
+
+### ❌ Pendente — Segurança (médio prazo)
+
+- [ ] Verificação de email no cadastro
+- [ ] JWT sem revogação (token 30d válido até expirar)
+- [ ] Regras de complexidade de senha (hoje: mínimo 8 chars)
 
 ## Convenções
 
 - Inglês no código, português em comentários
-- `PATCH /companies/{id}` futuramente deve exigir JWT do próprio company owner
-- Admin auth usa JWT separado — `admin_role` claim, não `role` (que é do token de company)
-- `frontend/src/data/mock.ts` mantém apenas listas estáticas (SPECIALTIES, COUNTRIES) — não adicionar dados fictícios
+- `mock.ts` mantém apenas listas estáticas — nunca dados fictícios
 - URL fields: sempre validar com `_validate_public_url()` antes de persistir
+- Admin auth usa JWT separado — claim `admin_role`, não `role` (que é do token de company)
+- localStorage: `on_token` / `on_company` / `on_admin_token` / `on_admin_name` / `on_admin_role`
