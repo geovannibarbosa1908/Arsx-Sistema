@@ -82,7 +82,7 @@ export default function ProfilePage() {
       const updated = await apiUpdateCompany(company.id, {
         name: form.name,
         phone: form.phone || null,
-        website: form.website || null,
+        website: form.website ? (form.website.match(/^https?:\/\//) ? form.website : `https://${form.website}`) : null,
         industry: form.industry || null,
         description: form.description || null,
         founding_year: form.founding_year ? parseInt(form.founding_year) : null,
@@ -99,8 +99,8 @@ export default function ProfilePage() {
           zip: form.address_zip || null,
         },
         social_media: {
-          linkedin_url: form.linkedin || null,
-          instagram_url: form.instagram || null,
+          linkedin_url: form.linkedin ? (form.linkedin.match(/^https?:\/\//) ? form.linkedin : `https://${form.linkedin}`) : null,
+          instagram_url: form.instagram ? (form.instagram.match(/^https?:\/\//) ? form.instagram : `https://${form.instagram}`) : null,
         },
         profile: {
           history: form.history || null,

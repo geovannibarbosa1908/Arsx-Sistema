@@ -78,7 +78,7 @@ export default function RegisterPage() {
         email: form.email,
         password: form.password,
         phone: form.phone || null,
-        website: form.website || null,
+        website: form.website ? (form.website.match(/^https?:\/\//) ? form.website : `https://${form.website}`) : null,
         industry: form.industry || null,
         description: form.description || null,
         founding_year: form.founding_year ? parseInt(form.founding_year) : null,
