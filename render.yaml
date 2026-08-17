@@ -15,6 +15,23 @@ services:
         sync: false
 
   - type: web
+    name: arsx-website
+    env: static
+    rootDir: website
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_OPENNETWORKING_API_URL
+        sync: false
+      - key: VITE_OPENNETWORKING_PORTAL_URL
+        sync: false
+
+  - type: web
     name: arsx-api
     runtime: docker
     region: oregon

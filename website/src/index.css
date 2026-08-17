@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-arsx-dark text-white font-sans antialiased;
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+@layer utilities {
+  .section-pad {
+    @apply py-20 px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-xl {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .green-line {
+    @apply block w-10 h-0.5 mt-2 mb-4;
+    background: linear-gradient(140deg, #cc0000, #7a0000);
+  }
+
+  .btn-green {
+    background: linear-gradient(140deg, #cc0000, #7a0000);
+    @apply text-white font-bold px-6 py-3 rounded transition-opacity duration-200 inline-flex items-center gap-2 hover:opacity-90;
+  }
+
+  .btn-outline-green {
+    @apply border text-white font-bold px-6 py-3 rounded transition-opacity duration-200 inline-flex items-center gap-2 hover:opacity-90;
+  }
+
+  .card-dark {
+    @apply bg-arsx-card border border-arsx-border rounded-xl p-6;
+  }
+}
