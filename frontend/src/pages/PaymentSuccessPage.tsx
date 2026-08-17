@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom'
+﻿import { Link, useSearchParams } from 'react-router-dom'
 import { CheckCircle, ArrowRight, Clock, Mail, LayoutDashboard } from 'lucide-react'
 
 const PLAN_LABELS: Record<string, string> = {
@@ -11,18 +11,18 @@ const PLAN_LABELS: Record<string, string> = {
 const NEXT_STEPS = [
   {
     icon: Clock,
-    title: 'Profile under review',
-    desc: 'Our team will review your company profile within 24–48 hours.',
+    title: 'Perfil em análise',
+    desc: 'Nossa equipe revisará seu perfil de empresa em 24–48 horas.',
   },
   {
     icon: Mail,
-    title: 'Confirmation email',
-    desc: 'You will receive an email once your listing is approved and live in the directory.',
+    title: 'E-mail de confirmação',
+    desc: 'Você receberá um e-mail assim que sua listagem for aprovada e publicada no diretório.',
   },
   {
     icon: LayoutDashboard,
-    title: 'Access your account',
-    desc: 'Log in now to complete your profile and get ready to receive RFQs.',
+    title: 'Acesse sua conta',
+    desc: 'Entre agora para completar seu perfil e começar a receber pedidos de cotação.',
   },
 ]
 
@@ -32,7 +32,7 @@ export default function PaymentSuccessPage() {
   const planLabel = PLAN_LABELS[plan]
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-16">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 pt-20 pb-16">
       <div className="w-full max-w-lg text-center">
 
         {/* Icon */}
@@ -43,13 +43,13 @@ export default function PaymentSuccessPage() {
         </div>
 
         {/* Heading */}
-        <h1 className="text-3xl font-extrabold text-navy mb-2">Payment Confirmed!</h1>
+        <h1 className="text-3xl font-extrabold text-arsx mb-2">Pagamento Confirmado!</h1>
         <p className="text-gray-500 text-sm mb-1">
-          Welcome to the ABPL Member Directory.
+          Bem-vindo ao Diretório de Parceiros ARS<span className="text-arsx">X</span>.
         </p>
         {planLabel && (
-          <p className="text-sm font-semibold text-navy mt-1">
-            Plan: <span className="text-brand-red">{planLabel}</span>
+          <p className="text-sm font-semibold text-arsx mt-1">
+            Plano: <span className="text-arsx">{planLabel}</span>
           </p>
         )}
 
@@ -57,12 +57,12 @@ export default function PaymentSuccessPage() {
         <div className="my-8 border-t border-gray-100" />
 
         {/* Next steps */}
-        <h2 className="text-base font-bold text-gray-800 mb-5">What happens next?</h2>
+        <h2 className="text-base font-bold text-gray-800 mb-5">O que acontece agora?</h2>
         <div className="space-y-4 text-left">
           {NEXT_STEPS.map(({ icon: Icon, title, desc }, i) => (
             <div key={title} className="flex gap-4 bg-gray-50 rounded-xl p-4 border border-gray-100">
-              <div className="w-9 h-9 rounded-lg bg-navy/10 flex items-center justify-center shrink-0">
-                <Icon size={18} className="text-navy" />
+              <div className="w-9 h-9 rounded-lg bg-arsx/10 flex items-center justify-center shrink-0">
+                <Icon size={18} className="text-arsx" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
@@ -81,20 +81,20 @@ export default function PaymentSuccessPage() {
             to="/login"
             className="btn-primary flex items-center justify-center gap-2 px-8 py-3"
           >
-            Sign In to My Account <ArrowRight size={16} />
+            Entrar na Minha Conta <ArrowRight size={16} />
           </Link>
           <Link
             to="/"
             className="btn-outline px-8 py-3 flex items-center justify-center gap-2"
           >
-            Back to Home
+            Voltar ao Início
           </Link>
         </div>
 
         <p className="text-xs text-gray-400 mt-6">
-          Questions? Contact us at{' '}
-          <a href="mailto:support@abplusa.com" className="underline hover:text-navy">
-            support@abplusa.com
+          Dúvidas? Entre em contato:{' '}
+          <a href="mailto:support@arsx.com.br" className="underline hover:text-arsx">
+            support@arsx.com.br
           </a>
         </p>
       </div>

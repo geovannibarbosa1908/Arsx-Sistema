@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Loader2, ArrowLeft } from 'lucide-react'
 import { forgotPassword } from '../lib/api'
@@ -17,34 +17,34 @@ export default function ForgotPasswordPage() {
       await forgotPassword(email)
       setSent(true)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Request failed')
+      setError(err instanceof Error ? err.message : 'Falha na solicitação')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 pt-20">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-extrabold text-navy">Forgot Password</h1>
-          <p className="text-gray-500 text-sm mt-1">We'll send a reset link to your email</p>
+          <h1 className="text-2xl font-extrabold text-arsx">Esqueceu a Senha</h1>
+          <p className="text-gray-500 text-sm mt-1">Enviaremos um link de redefinição para o seu e-mail</p>
         </div>
 
         {sent ? (
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 text-center space-y-4">
-            <p className="text-green-700 font-medium">Reset link sent!</p>
+            <p className="text-green-700 font-medium">Link de redefinição enviado!</p>
             <p className="text-sm text-gray-500">
-              If <strong>{email}</strong> is registered, you'll receive an email with a link to reset your password. Check your inbox (and spam folder).
+              Se <strong>{email}</strong> estiver cadastrado, você receberá um e-mail com o link para redefinir sua senha. Verifique sua caixa de entrada (e spam).
             </p>
-            <Link to="/login" className="inline-flex items-center gap-1 text-sm text-navy font-medium hover:underline">
-              <ArrowLeft size={14} /> Back to Sign In
+            <Link to="/login" className="inline-flex items-center gap-1 text-sm text-arsx font-medium hover:underline">
+              <ArrowLeft size={14} /> Voltar para Entrar
             </Link>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-5">
             <div>
-              <label className="label">Business Email</label>
+              <label className="label">E-mail Corporativo</label>
               <input
                 type="email"
                 className="input"
@@ -63,12 +63,12 @@ export default function ForgotPasswordPage() {
               className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60"
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-              {loading ? 'Sending...' : 'Send Reset Link'}
+              {loading ? 'Enviando...' : 'Enviar Link de Redefinição'}
             </button>
 
             <p className="text-center">
-              <Link to="/login" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-navy">
-                <ArrowLeft size={14} /> Back to Sign In
+              <Link to="/login" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-arsx">
+                <ArrowLeft size={14} /> Voltar para Entrar
               </Link>
             </p>
           </form>

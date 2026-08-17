@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import {
   Loader2, CheckCircle, XCircle, Clock, Users, Search, LogOut,
   ChevronRight, Calendar, Shield, UserPlus, ToggleLeft, ToggleRight,
@@ -97,7 +97,7 @@ function AdminLogin({ onLogin }: { onLogin: (token: string, name: string, role: 
       sessionStorage.setItem(SESSION_ROLE, data.role)
       onLogin(data.access_token, data.name, data.role)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Invalid credentials')
+      setError(err instanceof Error ? err.message : 'Credenciais inválidas')
     } finally {
       setLoading(false)
     }
@@ -108,24 +108,24 @@ function AdminLogin({ onLogin }: { onLogin: (token: string, name: string, role: 
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <span className="text-3xl font-black tracking-tight">
-            <span className="text-navy">A</span><span className="text-brand-red">B</span>
-            <span className="text-brand-orange">P</span><span className="text-brand-green">L</span>
+            <span className="text-arsx">A</span><span className="text-arsx">R</span>
+            <span className="text-arsx-light">S</span><span className="text-arsx">X</span>
           </span>
-          <p className="text-gray-500 text-sm mt-1">Admin Panel</p>
+          <p className="text-gray-500 text-sm mt-1">Painel Administrativo</p>
         </div>
         <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-4">
           <div>
-            <label className="label">Email</label>
+            <label className="label">E-mail</label>
             <input type="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
           </div>
           <div>
-            <label className="label">Password</label>
+            <label className="label">Senha</label>
             <input type="password" className="input" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <button type="submit" disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60">
             {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
       </div>
@@ -145,7 +145,7 @@ function Timeline({ companyId, token }: { companyId: number; token: string }) {
   }, [companyId, token])
 
   if (loading) return <div className="flex justify-center py-4"><Loader2 size={18} className="animate-spin text-gray-400" /></div>
-  if (events.length === 0) return <p className="text-sm text-gray-400 italic">No events yet.</p>
+  if (events.length === 0) return <p className="text-sm text-gray-400 italic">Nenhum evento registrado.</p>
 
   const todayEvents = events.filter((e) => isToday(e.created_at))
   const olderEvents = events.filter((e) => !isToday(e.created_at))
@@ -166,7 +166,7 @@ function Timeline({ companyId, token }: { companyId: number; token: string }) {
     <div className="space-y-4">
       {todayEvents.length > 0 && (
         <div>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Today</p>
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Hoje</p>
           <div className="space-y-3">
             {todayEvents.map((ev) => <EventItem key={ev.id} ev={ev} />)}
           </div>
@@ -174,7 +174,7 @@ function Timeline({ companyId, token }: { companyId: number; token: string }) {
       )}
       {olderEvents.length > 0 && (
         <div>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Earlier</p>
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Anteriores</p>
           <div className="space-y-3">
             {olderEvents.map((ev) => <EventItem key={ev.id} ev={ev} />)}
           </div>
@@ -216,7 +216,7 @@ function CompanyDetail({
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-        <h2 className="font-semibold text-gray-900">Details</h2>
+        <h2 className="font-semibold text-gray-900">Detalhes</h2>
         <button onClick={onClose} className="text-gray-400 hover:text-gray-600"><XCircle size={20} /></button>
       </div>
 
@@ -246,10 +246,10 @@ function CompanyDetail({
             key={t}
             onClick={() => setTab(t)}
             className={`py-2.5 px-3 text-sm font-medium border-b-2 transition-colors capitalize ${
-              tab === t ? 'border-navy text-navy' : 'border-transparent text-gray-500 hover:text-gray-700'
+              tab === t ? 'border-arsx text-arsx' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
-            {t === 'timeline' ? '🕐 Timeline' : 'Overview'}
+            {t === 'timeline' ? '🕐 Histórico' : 'Visão Geral'}
           </button>
         ))}
       </div>
@@ -259,34 +259,34 @@ function CompanyDetail({
           <>
             {/* Subscription */}
             <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Subscription</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Assinatura</p>
               {company.subscription_plan ? (
                 <div className="bg-gray-50 rounded-lg border border-gray-200 p-3 text-sm space-y-1.5">
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Plan</span>
+                    <span className="text-gray-500">Plano</span>
                     <span className="font-medium">{PLAN_LABELS[company.subscription_plan] ?? company.subscription_plan}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Status</span>
+                    <span className="text-gray-500">Situação</span>
                     <span className={`font-medium ${company.subscription_status === 'active' ? 'text-green-700' : 'text-yellow-700'}`}>
                       {company.subscription_status}
                     </span>
                   </div>
                   {company.subscription_period_end && (
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Renews</span>
+                      <span className="text-gray-500">Renovação</span>
                       <span className="flex items-center gap-1"><Calendar size={12} />{formatDate(company.subscription_period_end)}</span>
                     </div>
                   )}
                 </div>
               ) : (
-                <p className="text-sm text-gray-400 italic">No active subscription</p>
+                <p className="text-sm text-gray-400 italic">Nenhuma assinatura ativa</p>
               )}
             </div>
 
             {/* Registered */}
             <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Registered</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Cadastrado em</p>
               <p className="text-sm text-gray-700">{formatDate(company.created_at)}</p>
             </div>
 
@@ -296,21 +296,21 @@ function CompanyDetail({
                 <button onClick={approve} disabled={!!loading}
                   className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-lg transition-colors disabled:opacity-60">
                   {loading === 'approve' ? <Loader2 size={15} className="animate-spin" /> : <CheckCircle size={15} />}
-                  Approve Member
+                  Aprovar Membro
                 </button>
               )}
               {company.status === 'active' && (
                 <button onClick={suspend} disabled={!!loading}
                   className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg transition-colors disabled:opacity-60">
                   {loading === 'suspend' ? <Loader2 size={15} className="animate-spin" /> : <XCircle size={15} />}
-                  Suspend Member
+                  Suspender Membro
                 </button>
               )}
               {company.status === 'suspended' && (
                 <button onClick={approve} disabled={!!loading}
                   className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors disabled:opacity-60">
                   {loading === 'approve' ? <Loader2 size={15} className="animate-spin" /> : <CheckCircle size={15} />}
-                  Reactivate Member
+                  Reativar Membro
                 </button>
               )}
             </div>
@@ -351,7 +351,7 @@ function AdminUsersPanel({ token }: { token: string }) {
       setShowForm(false)
       load()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create admin')
+      setError(err instanceof Error ? err.message : 'Falha ao criar administrador')
     } finally { setSaving(false) }
   }
 
@@ -365,35 +365,35 @@ function AdminUsersPanel({ token }: { token: string }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-gray-900">Admin Users</h2>
+        <h2 className="text-lg font-bold text-gray-900">Usuários Administradores</h2>
         <button onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 bg-navy text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-navy/90">
-          <UserPlus size={15} /> New Admin
+          className="flex items-center gap-2 bg-arsx text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-arsx/90">
+          <UserPlus size={15} /> Novo Admin
         </button>
       </div>
 
       {showForm && (
         <form onSubmit={handleCreate} className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
-          <h3 className="font-semibold text-gray-800">Create Admin User</h3>
+          <h3 className="font-semibold text-gray-800">Criar Usuário Administrador</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="label">Name</label>
+              <label className="label">Nome</label>
               <input className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
             </div>
             <div>
-              <label className="label">Email</label>
+              <label className="label">E-mail</label>
               <input type="email" className="input" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required autoComplete="off" />
             </div>
             <div>
-              <label className="label">Password</label>
+              <label className="label">Senha</label>
               <input type="password" className="input" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required minLength={8} autoComplete="new-password" />
             </div>
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <div className="flex gap-2 justify-end">
-            <button type="button" onClick={() => setShowForm(false)} className="btn-outline px-4 py-2 text-sm">Cancel</button>
+            <button type="button" onClick={() => setShowForm(false)} className="btn-outline px-4 py-2 text-sm">Cancelar</button>
             <button type="submit" disabled={saving} className="btn-primary px-4 py-2 text-sm flex items-center gap-2 disabled:opacity-60">
-              {saving ? <Loader2 size={14} className="animate-spin" /> : null} Create
+              {saving ? <Loader2 size={14} className="animate-spin" /> : null} Criar
             </button>
           </div>
         </form>
@@ -406,10 +406,10 @@ function AdminUsersPanel({ token }: { token: string }) {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Name</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Email</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Role</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Active</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Nome</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">E-mail</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Função</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Ativo</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -419,12 +419,12 @@ function AdminUsersPanel({ token }: { token: string }) {
                   <td className="px-4 py-3 text-gray-500">{u.email}</td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${u.role === 'super_admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-700'}`}>
-                      {u.role === 'super_admin' ? 'Super Admin' : 'Admin'}
+                      {u.role === 'super_admin' ? 'Super Admin' : 'Administrador'}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     {u.role !== 'super_admin' && (
-                      <button onClick={() => handleToggle(u)} className="text-gray-400 hover:text-navy">
+                      <button onClick={() => handleToggle(u)} className="text-gray-400 hover:text-arsx">
                         {u.is_active ? <ToggleRight size={22} className="text-green-600" /> : <ToggleLeft size={22} />}
                       </button>
                     )}
@@ -481,8 +481,8 @@ function AdminPanel({ token, adminName, adminRole, onLogout }: { token: string; 
       <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="text-xl font-black tracking-tight">
-            <span className="text-navy">A</span><span className="text-brand-red">B</span>
-            <span className="text-brand-orange">P</span><span className="text-brand-green">L</span>
+            <span className="text-arsx">A</span><span className="text-arsx">R</span>
+            <span className="text-arsx-light">S</span><span className="text-arsx">X</span>
           </span>
           <span className="text-gray-400 text-sm">Admin</span>
         </div>
@@ -490,18 +490,18 @@ function AdminPanel({ token, adminName, adminRole, onLogout }: { token: string; 
           {adminRole === 'super_admin' && (
             <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
               <button onClick={() => setSection('companies')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-colors ${section === 'companies' ? 'bg-white text-navy shadow-sm' : 'text-gray-500'}`}>
-                <Users size={13} /> Companies
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-colors ${section === 'companies' ? 'bg-white text-arsx shadow-sm' : 'text-gray-500'}`}>
+                <Users size={13} /> Empresas
               </button>
               <button onClick={() => setSection('admins')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-colors ${section === 'admins' ? 'bg-white text-navy shadow-sm' : 'text-gray-500'}`}>
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-colors ${section === 'admins' ? 'bg-white text-arsx shadow-sm' : 'text-gray-500'}`}>
                 <Shield size={13} /> Admins
               </button>
             </div>
           )}
           <span className="text-sm text-gray-600">{adminName}</span>
-          <button onClick={onLogout} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-navy">
-            <LogOut size={15} /> Sign out
+          <button onClick={onLogout} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-arsx">
+            <LogOut size={15} /> Sair
           </button>
         </div>
       </header>
@@ -518,10 +518,10 @@ function AdminPanel({ token, adminName, adminRole, onLogout }: { token: string; 
           {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              { label: 'Total Companies', value: stats.total, icon: Users, color: 'text-navy' },
-              { label: 'Pending Review', value: stats.pending, icon: Clock, color: 'text-yellow-600' },
-              { label: 'Active Members', value: stats.active, icon: CheckCircle, color: 'text-green-600' },
-              { label: 'Suspended', value: stats.suspended, icon: XCircle, color: 'text-red-500' },
+              { label: 'Total de Empresas', value: stats.total, icon: Users, color: 'text-arsx' },
+              { label: 'Aguardando Revisão', value: stats.pending, icon: Clock, color: 'text-yellow-600' },
+              { label: 'Membros Ativos', value: stats.active, icon: CheckCircle, color: 'text-green-600' },
+              { label: 'Suspensos', value: stats.suspended, icon: XCircle, color: 'text-red-500' },
             ].map(({ label, value, icon: Icon, color }) => (
               <div key={label} className="bg-white rounded-xl border border-gray-200 p-4">
                 <div className="flex items-center gap-2 mb-1">
@@ -537,17 +537,17 @@ function AdminPanel({ token, adminName, adminRole, onLogout }: { token: string; 
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input className="input pl-9" placeholder="Search by name or email..." value={search} onChange={(e) => setSearch(e.target.value)} />
+              <input className="input pl-9" placeholder="Buscar por nome ou e-mail..." value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             <div className="flex gap-1 bg-white border border-gray-200 rounded-lg p-1">
               {[
-                { value: '', label: 'All' },
-                { value: 'pending', label: 'Pending' },
-                { value: 'active', label: 'Active' },
-                { value: 'suspended', label: 'Suspended' },
+                { value: '', label: 'Todos' },
+                { value: 'pending', label: 'Pendente' },
+                { value: 'active', label: 'Ativo' },
+                { value: 'suspended', label: 'Suspenso' },
               ].map((f) => (
                 <button key={f.value} onClick={() => setStatusFilter(f.value)}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${statusFilter === f.value ? 'bg-navy text-white' : 'text-gray-600 hover:bg-gray-100'}`}>
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${statusFilter === f.value ? 'bg-arsx text-white' : 'text-gray-600 hover:bg-gray-100'}`}>
                   {f.label}
                 </button>
               ))}
@@ -559,16 +559,16 @@ function AdminPanel({ token, adminName, adminRole, onLogout }: { token: string; 
             {loading ? (
               <div className="flex items-center justify-center h-40"><Loader2 size={24} className="animate-spin text-gray-400" /></div>
             ) : filtered.length === 0 ? (
-              <div className="flex items-center justify-center h-40 text-gray-400 text-sm">No companies found</div>
+              <div className="flex items-center justify-center h-40 text-gray-400 text-sm">Nenhuma empresa encontrada</div>
             ) : (
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-100 bg-gray-50">
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Company</th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden md:table-cell">Type</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Empresa</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden md:table-cell">Setor</th>
                     <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Status</th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden lg:table-cell">Plan</th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden lg:table-cell">Since</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden lg:table-cell">Plano</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden lg:table-cell">Desde</th>
                     <th className="w-8" />
                   </tr>
                 </thead>

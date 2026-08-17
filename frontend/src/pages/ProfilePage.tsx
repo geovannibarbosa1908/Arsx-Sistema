@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Loader2, CheckCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { updateCompany as apiUpdateCompany } from '../lib/api'
@@ -28,8 +28,8 @@ function ToggleGroup({
           onClick={() => toggle(o)}
           className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
             selected.includes(o)
-              ? 'bg-navy text-white border-navy'
-              : 'bg-white text-gray-700 border-gray-300 hover:border-navy'
+              ? 'bg-arsx text-white border-arsx'
+              : 'bg-white text-gray-700 border-gray-300 hover:border-arsx'
           }`}
         >
           {o}
@@ -113,7 +113,7 @@ export default function ProfilePage() {
       setSaved(true)
       setTimeout(() => setSaved(false), 4000)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save changes')
+      setError(err instanceof Error ? err.message : 'Falha ao salvar alterações')
     } finally {
       setSaving(false)
     }
@@ -122,9 +122,9 @@ export default function ProfilePage() {
   if (!company) return null
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <div className="max-w-3xl mx-auto px-4 pt-24 pb-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-extrabold text-navy">My Profile</h1>
+        <h1 className="text-2xl font-extrabold text-arsx">Meu Perfil</h1>
         <p className="text-gray-500 text-sm mt-1">
           {company.email} &mdash; <span className="capitalize">{company.status}</span>
         </p>
@@ -134,7 +134,7 @@ export default function ProfilePage() {
 
         {/* Section 1: Company Info */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sm:p-8 space-y-5">
-          <h2 className="section-title">Company Information</h2>
+          <h2 className="section-title">Informações da Empresa</h2>
 
           <div className="flex items-start gap-5">
             <div className="shrink-0">
@@ -146,136 +146,136 @@ export default function ProfilePage() {
               </div>
             </div>
             <div className="flex-1">
-              <label className="label">Company Name *</label>
+              <label className="label">Nome da Empresa *</label>
               <input className="input" value={form.name} onChange={(e) => set('name', e.target.value)} required />
             </div>
           </div>
 
           <div>
-            <label className="label">Logo URL</label>
+            <label className="label">URL do Logo</label>
             <input
               className="input"
               value={form.logo_url}
               onChange={(e) => set('logo_url', e.target.value)}
-              placeholder="https://yoursite.com/logo.png"
+              placeholder="https://seusite.com/logo.png"
             />
-            <p className="text-xs text-gray-400 mt-1">Paste a direct URL to your logo image (PNG, JPG, SVG). Recommended: square, min 200×200px.</p>
+            <p className="text-xs text-gray-400 mt-1">Cole uma URL direta para a imagem do logo (PNG, JPG, SVG). Recomendado: quadrado, mín. 200×200px.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="label">Phone</label>
-              <input className="input" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+1 (555) 000-0000" />
+              <label className="label">Telefone</label>
+              <input className="input" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+55 (11) 00000-0000" />
             </div>
             <div>
-              <label className="label">Website</label>
+              <label className="label">Site</label>
               <input className="input" value={form.website} onChange={(e) => set('website', e.target.value)} placeholder="https://" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="label">Industry</label>
+              <label className="label">Setor</label>
               <select className="input" value={form.industry} onChange={(e) => set('industry', e.target.value)}>
-                <option value="">Select industry...</option>
+                <option value="">Selecione o setor...</option>
                 {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
-                <option value="Other">Other</option>
+                <option value="Other">Outro</option>
               </select>
             </div>
             <div>
-              <label className="label">Number of Employees</label>
+              <label className="label">Número de Funcionários</label>
               <select className="input" value={form.employees} onChange={(e) => set('employees', e.target.value)}>
-                <option value="">Select...</option>
+                <option value="">Selecione...</option>
                 {EMPLOYEE_OPTIONS.map((o) => <option key={o}>{o}</option>)}
               </select>
             </div>
           </div>
 
           <div>
-            <label className="label">Year Founded</label>
+            <label className="label">Ano de Fundação</label>
             <input
               type="number"
               className="input"
               value={form.founding_year}
               onChange={(e) => set('founding_year', e.target.value)}
-              placeholder="e.g. 2005"
+              placeholder="ex.: 2005"
               min={1800}
               max={new Date().getFullYear()}
             />
           </div>
 
           <div>
-            <label className="label">Company Description</label>
+            <label className="label">Descrição da Empresa</label>
             <textarea
               className="input h-24 resize-none"
               value={form.description}
               onChange={(e) => set('description', e.target.value)}
-              placeholder="Brief description shown in directory listing..."
+              placeholder="Breve descrição exibida no diretório..."
             />
           </div>
         </div>
 
         {/* Section 2: Address & Social */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sm:p-8 space-y-5">
-          <h2 className="section-title">Address & Social Media</h2>
+          <h2 className="section-title">Endereço & Redes Sociais</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="label">Country</label>
+              <label className="label">País</label>
               <select className="input" value={form.address_country} onChange={(e) => set('address_country', e.target.value)}>
-                <option value="">Select country...</option>
+                <option value="">Selecione o país...</option>
                 {COUNTRIES.map((c) => <option key={c}>{c}</option>)}
-                <option value="Other">Other</option>
+                <option value="Other">Outro</option>
               </select>
             </div>
             <div>
-              <label className="label">State / Province</label>
+              <label className="label">Estado / Província</label>
               <input className="input" value={form.address_state} onChange={(e) => set('address_state', e.target.value)} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="label">City</label>
+              <label className="label">Cidade</label>
               <input className="input" value={form.address_city} onChange={(e) => set('address_city', e.target.value)} />
             </div>
             <div>
-              <label className="label">ZIP / Postal Code</label>
+              <label className="label">CEP / Código Postal</label>
               <input className="input" value={form.address_zip} onChange={(e) => set('address_zip', e.target.value)} />
             </div>
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             <div className="col-span-2">
-              <label className="label">Street Address</label>
+              <label className="label">Logradouro</label>
               <input className="input" value={form.address_street} onChange={(e) => set('address_street', e.target.value)} />
             </div>
             <div>
-              <label className="label">Number</label>
+              <label className="label">Número</label>
               <input className="input" value={form.address_number} onChange={(e) => set('address_number', e.target.value)} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="label">Complement</label>
-              <input className="input" value={form.address_complement} onChange={(e) => set('address_complement', e.target.value)} placeholder="Suite, Floor..." />
+              <label className="label">Complemento</label>
+              <input className="input" value={form.address_complement} onChange={(e) => set('address_complement', e.target.value)} placeholder="Sala, Andar..." />
             </div>
             <div>
-              <label className="label">District / Neighborhood</label>
+              <label className="label">Bairro</label>
               <input className="input" value={form.address_district} onChange={(e) => set('address_district', e.target.value)} />
             </div>
           </div>
 
           <div className="pt-2 border-t border-gray-100">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3">Social Media</h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Redes Sociais</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="label">LinkedIn URL</label>
+                <label className="label">URL do LinkedIn</label>
                 <input className="input" value={form.linkedin} onChange={(e) => set('linkedin', e.target.value)} placeholder="https://linkedin.com/company/..." />
               </div>
               <div>
-                <label className="label">Instagram URL</label>
+                <label className="label">URL do Instagram</label>
                 <input className="input" value={form.instagram} onChange={(e) => set('instagram', e.target.value)} placeholder="https://instagram.com/..." />
               </div>
             </div>
@@ -284,30 +284,30 @@ export default function ProfilePage() {
 
         {/* Section 3: Profile & Services */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sm:p-8 space-y-6">
-          <h2 className="section-title">Profile & Services</h2>
+          <h2 className="section-title">Perfil & Serviços</h2>
 
           <div>
-            <label className="label mb-2 block">Services & Expertise</label>
+            <label className="label mb-2 block">Serviços & Especialidades</label>
             <ToggleGroup options={SERVICE_TAGS} selected={form.tags} onChange={(v) => set('tags', v)} />
           </div>
 
           <div>
-            <label className="label mb-2 block">Certifications</label>
+            <label className="label mb-2 block">Certificações</label>
             <ToggleGroup options={CERT_OPTIONS} selected={form.certifications} onChange={(v) => set('certifications', v)} />
           </div>
 
           <div>
-            <label className="label mb-2 block">Associations & Networks</label>
+            <label className="label mb-2 block">Associações & Redes</label>
             <ToggleGroup options={NETWORK_OPTIONS} selected={form.networks} onChange={(v) => set('networks', v)} />
           </div>
 
           <div>
-            <label className="label">Company History</label>
+            <label className="label">Histórico da Empresa</label>
             <textarea
               className="input h-28 resize-none"
               value={form.history}
               onChange={(e) => set('history', e.target.value)}
-              placeholder="Detailed company history shown on full profile page..."
+              placeholder="Histórico detalhado da empresa exibido na página de perfil completo..."
             />
           </div>
         </div>
@@ -317,7 +317,7 @@ export default function ProfilePage() {
         <div className="flex items-center justify-between">
           {saved ? (
             <span className="flex items-center gap-2 text-sm text-green-700 font-medium">
-              <CheckCircle size={16} /> Changes saved successfully
+              <CheckCircle size={16} /> Alterações salvas com sucesso
             </span>
           ) : <span />}
           <button
@@ -326,7 +326,7 @@ export default function ProfilePage() {
             className="btn-primary flex items-center gap-2 disabled:opacity-60"
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : null}
-            {saving ? 'Saving...' : 'Save Changes'}
+            {saving ? 'Salvando...' : 'Salvar Alterações'}
           </button>
         </div>
       </form>

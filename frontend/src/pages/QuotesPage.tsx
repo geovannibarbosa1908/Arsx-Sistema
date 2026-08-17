@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Loader2, Send, Inbox, ChevronRight } from 'lucide-react'
 import { getQuotesSent, getQuotesReceived, type QuoteDetail } from '../lib/api'
@@ -49,20 +49,20 @@ function QuoteCard({ quote, mode }: { quote: QuoteDetail; mode: 'sent' | 'receiv
       {expanded && (
         <div className="px-5 pb-5 space-y-3 border-t border-gray-100 pt-4">
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Message</p>
+            <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Mensagem</p>
             <p className="text-sm text-gray-700">{quote.message}</p>
           </div>
           {(quote.origin || quote.destination) && (
             <div className="grid grid-cols-2 gap-4">
               {quote.origin && (
                 <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Origin</p>
+                  <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Origem</p>
                   <p className="text-sm text-gray-700">{quote.origin}</p>
                 </div>
               )}
               {quote.destination && (
                 <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Destination</p>
+                  <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Destino</p>
                   <p className="text-sm text-gray-700">{quote.destination}</p>
                 </div>
               )}
@@ -70,15 +70,15 @@ function QuoteCard({ quote, mode }: { quote: QuoteDetail; mode: 'sent' | 'receiv
           )}
           {quote.cargo_details && (
             <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Cargo Details</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Detalhes da Carga</p>
               <p className="text-sm text-gray-700">{quote.cargo_details}</p>
             </div>
           )}
           <Link
             to={`/company/${otherSlug}`}
-            className="inline-flex items-center gap-1.5 text-sm text-navy hover:underline mt-1"
+            className="inline-flex items-center gap-1.5 text-sm text-arsx hover:underline mt-1"
           >
-            View company profile →
+            Ver perfil da empresa →
           </Link>
         </div>
       )}
@@ -102,10 +102,10 @@ export default function QuotesPage() {
   }, [tab, company])
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <div className="max-w-3xl mx-auto px-4 pt-24 pb-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-extrabold text-navy">My RFQs</h1>
-        <p className="text-gray-500 text-sm mt-1">Manage your quote requests</p>
+        <h1 className="text-2xl font-extrabold text-arsx">Minhas Cotações</h1>
+        <p className="text-gray-500 text-sm mt-1">Gerencie seus pedidos de cotação</p>
       </div>
 
       {/* Tabs */}
@@ -113,18 +113,18 @@ export default function QuotesPage() {
         <button
           onClick={() => setTab('sent')}
           className={`flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-colors ${
-            tab === 'sent' ? 'bg-white text-navy shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            tab === 'sent' ? 'bg-white text-arsx shadow-sm' : 'text-gray-500 hover:text-gray-700'
           }`}
         >
-          <Send size={14} /> Sent
+          <Send size={14} /> Enviadas
         </button>
         <button
           onClick={() => setTab('received')}
           className={`flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-colors ${
-            tab === 'received' ? 'bg-white text-navy shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            tab === 'received' ? 'bg-white text-arsx shadow-sm' : 'text-gray-500 hover:text-gray-700'
           }`}
         >
-          <Inbox size={14} /> Received
+          <Inbox size={14} /> Recebidas
         </button>
       </div>
 
@@ -134,10 +134,10 @@ export default function QuotesPage() {
         </div>
       ) : quotes.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
-          <p className="text-lg font-medium mb-2">No RFQs {tab}</p>
+          <p className="text-lg font-medium mb-2">Nenhuma cotação {tab === 'sent' ? 'enviada' : 'recebida'}</p>
           {tab === 'sent' && (
-            <Link to="/directory" className="text-sm text-navy hover:underline">
-              Browse the directory to find suppliers →
+            <Link to="/directory" className="text-sm text-arsx hover:underline">
+              Explore o diretório para encontrar fornecedores →
             </Link>
           )}
         </div>

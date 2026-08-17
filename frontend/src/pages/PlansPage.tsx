@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import PlanCard from '../components/PlanCard'
 import { PLANS } from '../data/mock'
 import { HelpCircle } from 'lucide-react'
@@ -7,10 +7,10 @@ export default function PlansPage() {
   return (
     <div>
       {/* Hero */}
-      <div className="bg-navy py-14 px-4 text-center">
-        <h1 className="text-3xl font-extrabold text-white">Simple, Transparent Pricing</h1>
+      <div className="bg-arsx-card pt-28 pb-14 px-4 text-center">
+        <h1 className="text-3xl font-extrabold text-white">Preços Simples e Transparentes</h1>
         <p className="text-blue-200 mt-2 text-sm">
-          Start free. Upgrade when you're ready to connect.
+          Comece grátis. Faça upgrade quando estiver pronto para se conectar.
         </p>
       </div>
 
@@ -24,29 +24,29 @@ export default function PlansPage() {
 
         {/* FAQ */}
         <div className="mt-14">
-          <h2 className="text-xl font-bold text-navy text-center mb-8">Common Questions</h2>
+          <h2 className="text-xl font-bold text-arsx text-center mb-8">Perguntas Frequentes</h2>
           <div className="space-y-4">
             {[
               {
-                q: 'Is the Free plan really free?',
-                a: 'Yes. Creating your company profile is completely free. Your basic info and description will be visible in the directory. Upgrade to Pro or Business to unlock contact details and send messages.',
+                q: 'O plano gratuito é realmente grátis?',
+                a: 'Sim. Criar seu perfil de empresa é completamente gratuito. Suas informações básicas e descrição ficarão visíveis no diretório. Faça upgrade para Pro ou Business para desbloquear detalhes de contato e enviar mensagens.',
               },
               {
-                q: 'What happens after I register?',
-                a: 'Your profile is reviewed by our team within 24–48 hours. Once approved, your company appears in the directory immediately.',
+                q: 'O que acontece após o cadastro?',
+                a: 'Seu perfil é revisado pela nossa equipe em 24–48 horas. Após aprovado, sua empresa aparece imediatamente no diretório.',
               },
               {
-                q: 'How do members contact each other?',
-                a: 'Pro and Business members can view full contact details and send messages directly through the directory. Free members can browse profiles but need to upgrade to access contacts.',
+                q: 'Como os membros entram em contato entre si?',
+                a: 'Membros Pro e Business podem ver todos os dados de contato e enviar mensagens diretamente pelo diretório. Membros gratuitos podem navegar pelos perfis, mas precisam fazer upgrade para acessar os contatos.',
               },
               {
-                q: 'Can I cancel anytime?',
-                a: 'Yes. All paid plans are billed monthly and can be cancelled at any time. Your listing remains active until the end of the billing period.',
+                q: 'Posso cancelar a qualquer momento?',
+                a: 'Sim. Todos os planos pagos são cobrados mensalmente e podem ser cancelados a qualquer momento. Sua listagem permanece ativa até o fim do período de cobrança.',
               },
             ].map(({ q, a }) => (
               <div key={q} className="border border-gray-200 rounded-lg p-5">
                 <div className="flex items-start gap-3">
-                  <HelpCircle size={18} className="text-navy mt-0.5 shrink-0" />
+                  <HelpCircle size={18} className="text-arsx mt-0.5 shrink-0" />
                   <div>
                     <p className="font-semibold text-gray-900 text-sm">{q}</p>
                     <p className="text-sm text-gray-600 mt-1">{a}</p>
@@ -60,9 +60,9 @@ export default function PlansPage() {
         {/* CTA */}
         <div className="mt-12 text-center">
           <Link to="/register" className="btn-primary">
-            Create Free Profile
+            Criar Perfil Gratuito
           </Link>
-          <p className="text-xs text-gray-400 mt-3">No credit card required for the free plan</p>
+          <p className="text-xs text-gray-400 mt-3">Nenhum cartão de crédito necessário para o plano gratuito</p>
         </div>
       </div>
     </div>

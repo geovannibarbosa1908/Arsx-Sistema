@@ -1,10 +1,10 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { ChevronRight, ChevronLeft, Loader2 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { INDUSTRIES, COUNTRIES } from '../data/mock'
 import { createCompany, createCheckout } from '../lib/api'
 
-const STEPS = ['Company Info', 'Address & Social', 'Profile & Tags', 'Plan']
+const STEPS = ['Dados da Empresa', 'Endereço & Redes', 'Perfil & Tags', 'Plano']
 
 const EMPLOYEE_OPTIONS = ['1–10', '10–50', '50–200', '200–500', '500+']
 const CERT_OPTIONS = ['ISO 9001', 'ISO 14001', 'ISO 27001', 'B Corp', 'SOC 2', 'PCI DSS', 'GDPR Compliant']
@@ -32,8 +32,8 @@ function ToggleGroup({
           onClick={() => toggle(o)}
           className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
             selected.includes(o)
-              ? 'bg-navy text-white border-navy'
-              : 'bg-white text-gray-700 border-gray-300 hover:border-navy'
+              ? 'bg-arsx text-white border-arsx'
+              : 'bg-white text-gray-700 border-gray-300 hover:border-arsx'
           }`}
         >
           {o}
@@ -118,7 +118,7 @@ export default function RegisterPage() {
       )
       window.location.href = checkout_url
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Registration failed'
+      const msg = err instanceof Error ? err.message : 'Falha no cadastro'
       if (msg === 'Email already registered') {
         setAlreadyRegistered(true)
       } else {
@@ -129,10 +129,10 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <div className="max-w-3xl mx-auto px-4 pt-24 pb-10">
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-extrabold text-navy">Register Your Company</h1>
-        <p className="text-gray-500 text-sm mt-1">Join the Open Networking directory</p>
+        <h1 className="text-2xl font-extrabold text-arsx">Cadastre sua Empresa</h1>
+        <p className="text-gray-500 text-sm mt-1">Junte-se ao diretório ARS<span className="text-arsx">X</span></p>
       </div>
 
       {/* Stepper */}
@@ -142,19 +142,19 @@ export default function RegisterPage() {
             <div className="flex flex-col items-center">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                  i < step ? 'bg-brand-green text-white'
-                    : i === step ? 'bg-navy text-white'
+                  i < step ? 'bg-arsx text-white'
+                    : i === step ? 'bg-arsx text-white'
                     : 'bg-gray-200 text-gray-500'
                 }`}
               >
                 {i < step ? '✓' : i + 1}
               </div>
-              <span className={`text-[10px] mt-1 font-medium hidden sm:block ${i === step ? 'text-navy' : 'text-gray-400'}`}>
+              <span className={`text-[10px] mt-1 font-medium hidden sm:block ${i === step ? 'text-arsx' : 'text-gray-400'}`}>
                 {s}
               </span>
             </div>
             {i < STEPS.length - 1 && (
-              <div className={`flex-1 h-0.5 mx-2 ${i < step ? 'bg-brand-green' : 'bg-gray-200'}`} />
+              <div className={`flex-1 h-0.5 mx-2 ${i < step ? 'bg-arsx' : 'bg-gray-200'}`} />
             )}
           </div>
         ))}
@@ -166,55 +166,55 @@ export default function RegisterPage() {
           {/* Step 0: Company Info */}
           {step === 0 && (
             <div className="space-y-5">
-              <h2 className="section-title">Company Information</h2>
+              <h2 className="section-title">Informações da Empresa</h2>
 
               <div>
-                <label className="label">Company Name *</label>
+                <label className="label">Nome da Empresa *</label>
                 <input className="input" value={form.name} onChange={(e) => set('name', e.target.value)} required />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="label">Business Email *</label>
+                  <label className="label">E-mail Corporativo *</label>
                   <input type="email" className="input" value={form.email} onChange={(e) => set('email', e.target.value)} required autoComplete="email" />
                 </div>
                 <div>
-                  <label className="label">Phone</label>
-                  <input className="input" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+1 (555) 000-0000" />
+                  <label className="label">Telefone</label>
+                  <input className="input" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+55 (11) 00000-0000" />
                 </div>
               </div>
 
               <div>
-                <label className="label">Website</label>
+                <label className="label">Site</label>
                 <input className="input" value={form.website} onChange={(e) => set('website', e.target.value)} placeholder="https://" />
               </div>
 
               <div>
-                <label className="label">Password *</label>
-                <input type="password" className="input" value={form.password} onChange={(e) => set('password', e.target.value)} required minLength={8} placeholder="Min. 8 characters" autoComplete="new-password" />
+                <label className="label">Senha *</label>
+                <input type="password" className="input" value={form.password} onChange={(e) => set('password', e.target.value)} required minLength={8} placeholder="Mín. 8 caracteres" autoComplete="new-password" />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="label">Industry</label>
+                  <label className="label">Setor</label>
                   <select className="input" value={form.industry} onChange={(e) => set('industry', e.target.value)}>
-                    <option value="">Select industry...</option>
+                    <option value="">Selecione o setor...</option>
                     {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
-                    <option value="Other">Other</option>
+                    <option value="Other">Outro</option>
                   </select>
                 </div>
                 <div>
-                  <label className="label">Number of Employees</label>
+                  <label className="label">Número de Funcionários</label>
                   <select className="input" value={form.employees} onChange={(e) => set('employees', e.target.value)}>
-                    <option value="">Select...</option>
+                    <option value="">Selecione...</option>
                     {EMPLOYEE_OPTIONS.map((o) => <option key={o}>{o}</option>)}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="label">Year Founded</label>
-                <input type="number" className="input" value={form.founding_year} onChange={(e) => set('founding_year', e.target.value)} placeholder="e.g. 2005" min={1800} max={new Date().getFullYear()} />
+                <label className="label">Ano de Fundação</label>
+                <input type="number" className="input" value={form.founding_year} onChange={(e) => set('founding_year', e.target.value)} placeholder="ex.: 2005" min={1800} max={new Date().getFullYear()} />
               </div>
             </div>
           )}
@@ -222,65 +222,65 @@ export default function RegisterPage() {
           {/* Step 1: Address & Social */}
           {step === 1 && (
             <div className="space-y-5">
-              <h2 className="section-title">Address & Social Media</h2>
+              <h2 className="section-title">Endereço & Redes Sociais</h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="label">Country *</label>
+                  <label className="label">País *</label>
                   <select className="input" value={form.address_country} onChange={(e) => set('address_country', e.target.value)} required>
-                    <option value="">Select country...</option>
+                    <option value="">Selecione o país...</option>
                     {COUNTRIES.map((c) => <option key={c}>{c}</option>)}
-                    <option value="Other">Other</option>
+                    <option value="Other">Outro</option>
                   </select>
                 </div>
                 <div>
-                  <label className="label">State / Province</label>
+                  <label className="label">Estado / Província</label>
                   <input className="input" value={form.address_state} onChange={(e) => set('address_state', e.target.value)} />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="label">City *</label>
+                  <label className="label">Cidade *</label>
                   <input className="input" value={form.address_city} onChange={(e) => set('address_city', e.target.value)} required />
                 </div>
                 <div>
-                  <label className="label">ZIP / Postal Code</label>
+                  <label className="label">CEP / Código Postal</label>
                   <input className="input" value={form.address_zip} onChange={(e) => set('address_zip', e.target.value)} />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
-                  <label className="label">Street Address</label>
+                  <label className="label">Logradouro</label>
                   <input className="input" value={form.address_street} onChange={(e) => set('address_street', e.target.value)} />
                 </div>
                 <div>
-                  <label className="label">Number</label>
+                  <label className="label">Número</label>
                   <input className="input" value={form.address_number} onChange={(e) => set('address_number', e.target.value)} />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="label">Complement</label>
-                  <input className="input" value={form.address_complement} onChange={(e) => set('address_complement', e.target.value)} placeholder="Suite, Floor..." />
+                  <label className="label">Complemento</label>
+                  <input className="input" value={form.address_complement} onChange={(e) => set('address_complement', e.target.value)} placeholder="Sala, Andar..." />
                 </div>
                 <div>
-                  <label className="label">District / Neighborhood</label>
+                  <label className="label">Bairro</label>
                   <input className="input" value={form.address_district} onChange={(e) => set('address_district', e.target.value)} />
                 </div>
               </div>
 
               <div className="pt-2 border-t border-gray-100">
-                <h3 className="text-sm font-semibold text-gray-700 mb-3">Social Media</h3>
+                <h3 className="text-sm font-semibold text-gray-700 mb-3">Redes Sociais</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="label">LinkedIn URL</label>
+                    <label className="label">URL do LinkedIn</label>
                     <input className="input" value={form.linkedin} onChange={(e) => set('linkedin', e.target.value)} placeholder="https://linkedin.com/company/..." />
                   </div>
                   <div>
-                    <label className="label">Instagram URL</label>
+                    <label className="label">URL do Instagram</label>
                     <input className="input" value={form.instagram} onChange={(e) => set('instagram', e.target.value)} placeholder="https://instagram.com/..." />
                   </div>
                 </div>
@@ -291,31 +291,31 @@ export default function RegisterPage() {
           {/* Step 2: Profile & Tags */}
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="section-title">Profile & Services</h2>
+              <h2 className="section-title">Perfil & Serviços</h2>
 
               <div>
-                <label className="label">Company Description *</label>
+                <label className="label">Descrição da Empresa *</label>
                 <textarea
                   className="input h-20 resize-none"
                   value={form.description}
                   onChange={(e) => set('description', e.target.value)}
-                  placeholder="Brief description for the directory listing..."
+                  placeholder="Breve descrição para o perfil no diretório..."
                   required
                 />
               </div>
 
               <div>
-                <label className="label mb-2 block">Services & Expertise</label>
+                <label className="label mb-2 block">Serviços & Especialidades</label>
                 <ToggleGroup options={SERVICE_TAGS} selected={form.tags} onChange={(v) => set('tags', v)} />
               </div>
 
               <div>
-                <label className="label mb-2 block">Certifications</label>
+                <label className="label mb-2 block">Certificações</label>
                 <ToggleGroup options={CERT_OPTIONS} selected={form.certifications} onChange={(v) => set('certifications', v)} />
               </div>
 
               <div>
-                <label className="label mb-2 block">Associations & Networks</label>
+                <label className="label mb-2 block">Associações & Redes</label>
                 <ToggleGroup options={NETWORK_OPTIONS} selected={form.networks} onChange={(v) => set('networks', v)} />
               </div>
             </div>
@@ -324,32 +324,32 @@ export default function RegisterPage() {
           {/* Step 3: Plan */}
           {step === 3 && (
             <div className="space-y-5">
-              <h2 className="section-title">Choose Your Plan</h2>
+              <h2 className="section-title">Escolha seu Plano</h2>
               <p className="text-sm text-gray-500">
-                Start free and upgrade anytime. Paid plans are activated after registration.
+                Comece grátis e faça upgrade quando quiser. Planos pagos são ativados após o cadastro.
               </p>
 
               <div className="space-y-3">
                 {[
-                  { id: 'free', name: 'Free', price: 'Free forever', desc: 'Profile visible in directory. Basic contact info only.' },
-                  { id: 'pro', name: 'Pro', price: '$29/mo', desc: 'Full access to contacts. Send and receive messages.', popular: false },
-                  { id: 'business', name: 'Business', price: '$79/mo', desc: 'Featured listing, analytics, priority support.', popular: true },
+                  { id: 'free', name: 'Gratuito', price: 'Grátis para sempre', desc: 'Perfil visível no diretório. Apenas informações básicas de contato.' },
+                  { id: 'pro', name: 'Pro', price: '$29/mês', desc: 'Acesso completo aos contatos. Envie e receba mensagens.', popular: false },
+                  { id: 'business', name: 'Business', price: '$79/mês', desc: 'Listagem em destaque, analytics, suporte prioritário.', popular: true },
                 ].map((p) => (
                   <label
                     key={p.id}
                     className={`relative block border-2 rounded-xl p-4 cursor-pointer transition-all ${
-                      form.plan === p.id ? 'border-navy bg-navy/5' : 'border-gray-200 hover:border-gray-300'
+                      form.plan === p.id ? 'border-arsx bg-arsx/5' : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
                     <input type="radio" name="plan" value={p.id} checked={form.plan === p.id} onChange={() => set('plan', p.id)} className="sr-only" />
                     {p.popular && (
-                      <span className="absolute -top-2.5 right-3 bg-navy text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      <span className="absolute -top-2.5 right-3 bg-arsx text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                         Popular
                       </span>
                     )}
                     <div className="flex items-center justify-between">
                       <p className="font-semibold text-gray-900">{p.name}</p>
-                      <p className="text-brand-red font-bold">{p.price}</p>
+                      <p className="text-arsx font-bold">{p.price}</p>
                     </div>
                     <p className="text-xs text-gray-500 mt-1">{p.desc}</p>
                   </label>
@@ -358,8 +358,8 @@ export default function RegisterPage() {
 
               <p className="text-xs text-gray-400 text-center">
                 {form.plan === 'free'
-                  ? 'Free plan — no credit card required.'
-                  : 'After submitting, you\'ll be redirected to a secure Stripe payment page.'}
+                  ? 'Plano gratuito — nenhum cartão de crédito necessário.'
+                  : 'Após enviar, você será redirecionado para a página de pagamento seguro do Stripe.'}
               </p>
             </div>
           )}
@@ -367,8 +367,8 @@ export default function RegisterPage() {
 
         {alreadyRegistered && (
           <p className="mt-4 text-sm text-red-600 text-center">
-            This email is already registered.{' '}
-            <Link to="/login" className="underline font-medium">Sign in here</Link>.
+            Este e-mail já está cadastrado.{' '}
+            <Link to="/login" className="underline font-medium">Entre aqui</Link>.
           </p>
         )}
         {submitError && (
@@ -383,7 +383,7 @@ export default function RegisterPage() {
             className="flex items-center gap-2 px-5 py-2.5 border border-gray-300 rounded text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ChevronLeft size={16} />
-            Back
+            Voltar
           </button>
 
           {step < STEPS.length - 1 ? (
@@ -392,13 +392,13 @@ export default function RegisterPage() {
               onClick={() => setStep(step + 1)}
               className="flex items-center gap-2 btn-navy"
             >
-              Next
+              Próximo
               <ChevronRight size={16} />
             </button>
           ) : (
             <button type="submit" disabled={submitting} className="btn-primary flex items-center gap-2 disabled:opacity-60">
               {submitting ? <Loader2 size={16} className="animate-spin" /> : <ChevronRight size={16} />}
-              {submitting ? 'Submitting...' : form.plan === 'free' ? 'Create Free Profile' : 'Continue to Payment'}
+              {submitting ? 'Enviando...' : form.plan === 'free' ? 'Criar Perfil Gratuito' : 'Continuar para Pagamento'}
             </button>
           )}
         </div>

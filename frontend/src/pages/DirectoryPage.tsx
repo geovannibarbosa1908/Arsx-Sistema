@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+﻿import { useState, useEffect, useMemo } from 'react'
 import { Search, SlidersHorizontal, X, Loader2 } from 'lucide-react'
 import CompanyCard from '../components/CompanyCard'
 import { getCompanies, type CompanyListItem } from '../lib/api'
@@ -48,18 +48,18 @@ export default function DirectoryPage() {
 
   return (
     <div>
-      <div className="bg-navy py-10 px-4">
+      <div className="bg-arsx-card pt-28 pb-10 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl font-extrabold text-white mb-2">Member Directory</h1>
+          <h1 className="text-3xl font-extrabold text-white mb-2">Diretório de Empresas</h1>
           <p className="text-blue-200 text-sm">
-            Find verified business partners across all industries — every company has been screened and approved.
+            Encontre parceiros de negócios verificados em todos os setores — cada empresa foi analisada e aprovada.
           </p>
 
           <div className="mt-6 bg-white rounded-lg shadow-lg flex items-center overflow-hidden">
             <Search size={18} className="ml-4 text-gray-400 shrink-0" />
             <input
               type="text"
-              placeholder="Search by company name or keyword..."
+              placeholder="Buscar por nome da empresa ou palavra-chave..."
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               className="flex-1 px-3 py-3.5 text-sm outline-none"
@@ -69,10 +69,10 @@ export default function DirectoryPage() {
               onClick={() => setShowFilters(!showFilters)}
             >
               <SlidersHorizontal size={16} />
-              Filters
+              Filtros
             </button>
-            <button className="bg-brand-red text-white px-5 py-3.5 text-sm font-semibold hover:bg-red-700 transition-colors">
-              Search
+            <button className="bg-arsx text-white px-5 py-3.5 text-sm font-semibold hover:bg-red-700 transition-colors">
+              Buscar
             </button>
           </div>
 
@@ -83,13 +83,13 @@ export default function DirectoryPage() {
                 onChange={(e) => setCountry(e.target.value)}
                 className="input bg-white text-gray-800"
               >
-                <option value="">All Countries</option>
+                <option value="">Todos os Países</option>
                 {COUNTRIES.map((c) => <option key={c}>{c}</option>)}
               </select>
 
               <input
                 type="text"
-                placeholder="City"
+                placeholder="Cidade"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 className="input bg-white"
@@ -100,7 +100,7 @@ export default function DirectoryPage() {
                 onChange={(e) => setIndustry(e.target.value)}
                 className="input bg-white text-gray-800"
               >
-                <option value="">All Industries</option>
+                <option value="">Todos os Setores</option>
                 {INDUSTRIES.map((s) => <option key={s}>{s}</option>)}
               </select>
             </div>
@@ -112,16 +112,16 @@ export default function DirectoryPage() {
         <div className="flex items-center justify-between mb-5">
           <p className="text-sm text-gray-600">
             {loading
-              ? 'Loading...'
-              : <><span className="font-semibold text-gray-900">{results.length}</span> companies found</>}
+              ? 'Carregando...'
+              : <><span className="font-semibold text-gray-900">{results.length}</span> empresas encontradas</>}
           </p>
           {hasFilters && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-1.5 text-sm text-brand-red hover:underline"
+              className="flex items-center gap-1.5 text-sm text-arsx hover:underline"
             >
               <X size={14} />
-              Clear filters
+              Limpar filtros
             </button>
           )}
         </div>
@@ -132,14 +132,14 @@ export default function DirectoryPage() {
           </div>
         ) : error ? (
           <div className="text-center py-20 text-red-500">
-            <p className="font-medium">Failed to load directory</p>
+            <p className="font-medium">Erro ao carregar o diretório</p>
             <p className="text-sm mt-1">{error}</p>
           </div>
         ) : results.length === 0 ? (
           <div className="text-center py-20 text-gray-500">
             <Search size={40} className="mx-auto mb-3 opacity-30" />
-            <p className="font-medium">No companies found</p>
-            <p className="text-sm mt-1">Try adjusting your filters</p>
+            <p className="font-medium">Nenhuma empresa encontrada</p>
+            <p className="text-sm mt-1">Tente ajustar os filtros</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -149,15 +149,15 @@ export default function DirectoryPage() {
           </div>
         )}
 
-        <div className="mt-12 bg-navy rounded-xl p-8 text-center text-white">
-          <h2 className="text-xl font-bold">Is your company listed here?</h2>
+        <div className="mt-12 bg-arsx-card rounded-xl p-8 text-center text-white">
+          <h2 className="text-xl font-bold">Sua empresa está listada aqui?</h2>
           <p className="text-blue-200 mt-2 text-sm">
-            Join the Open Networking community and connect with business partners worldwide
+            Junte-se à comunidade ARS<span className="text-arsx">X</span> e conecte-se com parceiros de negócios em todo o mundo
           </p>
           <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="/register" className="btn-primary">List My Company</a>
-            <a href="/plans" className="btn-outline border-white text-white hover:bg-white hover:text-navy">
-              View Plans
+            <a href="/register" className="btn-primary">Cadastrar Minha Empresa</a>
+            <a href="/plans" className="btn-outline border-white text-white hover:bg-white hover:text-arsx">
+              Ver Planos
             </a>
           </div>
         </div>

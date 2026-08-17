@@ -10,22 +10,24 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-brand-red text-white font-semibold px-6 py-3 rounded hover:bg-red-700 transition-colors;
+    background: linear-gradient(140deg, #cc0000, #7a0000);
+    @apply text-white font-semibold px-6 py-3 rounded hover:opacity-90 transition-opacity inline-flex items-center gap-2;
   }
   .btn-navy {
-    @apply bg-navy text-white font-semibold px-6 py-3 rounded hover:bg-navy-dark transition-colors;
+    background: linear-gradient(140deg, #cc0000, #7a0000);
+    @apply text-white font-semibold px-6 py-3 rounded hover:opacity-90 transition-opacity;
   }
   .btn-outline {
-    @apply border-2 border-navy text-navy font-semibold px-6 py-3 rounded hover:bg-navy hover:text-white transition-colors;
+    @apply border-2 border-[#cc0000] text-[#cc0000] font-semibold px-6 py-3 rounded hover:bg-[#cc0000] hover:text-white transition-colors;
   }
   .input {
-    @apply w-full border border-gray-300 rounded px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent text-sm;
+    @apply w-full border border-gray-300 rounded px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#cc0000] focus:border-transparent text-sm;
   }
   .label {
     @apply block text-sm font-medium text-gray-700 mb-1;
   }
   .section-title {
-    @apply text-2xl font-bold text-navy;
+    @apply text-2xl font-bold text-[#cc0000];
   }
   .badge {
     @apply inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full;

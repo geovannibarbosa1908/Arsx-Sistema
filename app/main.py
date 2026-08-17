@@ -10,7 +10,7 @@ from starlette.responses import Response
 from app.core.config import settings
 from app.core.limiter import limiter
 from app.models import admin_user, company_event  # noqa: F401 — registra no Base.metadata
-from app.routers import admin, auth, companies, quotes, subscriptions
+from app.routers import admin, auth, companies, public, quotes, subscriptions
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
@@ -54,6 +54,7 @@ app.include_router(companies.router, prefix="/api")
 app.include_router(subscriptions.router, prefix="/api")
 app.include_router(quotes.router, prefix="/api")
 app.include_router(admin.router, prefix="/api")
+app.include_router(public.router, prefix="/api")
 
 
 @app.get("/health")

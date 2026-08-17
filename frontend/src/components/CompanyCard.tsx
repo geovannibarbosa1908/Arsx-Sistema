@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { MapPin, Globe } from 'lucide-react'
 import type { CompanyListItem } from '../lib/api'
 
@@ -25,7 +25,7 @@ export default function CompanyCard({ company }: Props) {
   return (
     <Link
       to={`/company/${company.slug}`}
-      className="group block bg-white rounded-lg border border-gray-200 hover:border-navy hover:shadow-md transition-all overflow-hidden"
+      className="group block bg-white rounded-lg border border-gray-200 hover:border-arsx hover:shadow-md transition-all overflow-hidden"
     >
       <div className="p-5">
         <div className="flex items-start gap-4">
@@ -39,7 +39,7 @@ export default function CompanyCard({ company }: Props) {
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 group-hover:text-navy truncate">
+            <h3 className="font-semibold text-gray-900 group-hover:text-arsx truncate">
               {company.name}
             </h3>
             <div className="flex items-center gap-1 text-sm text-gray-500 mt-0.5">
@@ -71,7 +71,7 @@ export default function CompanyCard({ company }: Props) {
         </div>
 
         <div className="flex items-center justify-end mt-4 pt-3 border-t border-gray-100">
-          <Globe size={14} className="text-gray-200 group-hover:text-navy transition-colors" />
+          <Globe size={14} className="text-gray-200 group-hover:text-arsx transition-colors" />
         </div>
       </div>
     </Link>

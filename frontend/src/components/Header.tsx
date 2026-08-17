@@ -1,141 +1,189 @@
-import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Menu, X, LogOut, Shield } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 
-
 const NAV_PUBLIC = [
-  { label: 'Directory', to: '/directory' },
-  { label: 'Plans', to: '/plans' },
+  { label: 'Diretório', to: '/directory' },
+  { label: 'Planos', to: '/plans' },
 ]
 
 const NAV_AUTH = [
-  { label: 'Directory', to: '/directory' },
-  { label: 'My RFQs', to: '/quotes' },
-  { label: 'Plans', to: '/plans' },
+  { label: 'Diretório', to: '/directory' },
+  { label: 'Minhas Cotações', to: '/quotes' },
+  { label: 'Planos', to: '/plans' },
 ]
 
 export default function Header() {
-  const [open, setOpen] = useState(false)
-  const { pathname } = useLocation()
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const { isAuthenticated, company, logout } = useAuth()
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  const isHome = pathname === '/'
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 30)
+    window.addEventListener('scroll', handler, { passive: true })
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
 
   function handleLogout() {
     logout()
     navigate('/')
+    setMobileOpen(false)
   }
 
+  const links = isAuthenticated ? NAV_AUTH : NAV_PUBLIC
+  const solid = !isHome || scrolled
+
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        solid
+          ? 'bg-arsx-card/95 backdrop-blur-md shadow-[0_1px_0_rgba(255,255,255,0.08)]'
+          : 'bg-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 shrink-0">
-            <span className="text-2xl font-black tracking-tight">
-              <span className="text-navy">A</span>
-              <span className="text-brand-red">B</span>
-              <span className="text-brand-orange">P</span>
-              <span className="text-brand-green">L</span>
-            </span>
-            <span className="hidden sm:block text-xs text-gray-500 leading-tight max-w-[140px]">
-              Member Directory
-            </span>
+        <div className="flex items-center justify-between h-16 sm:h-20">
+          <Link to="/" className="text-2xl font-black tracking-tight text-white">
+            ARS<span className="text-arsx">X</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1">
-            {(isAuthenticated ? NAV_AUTH : NAV_PUBLIC).map((item) => (
+          <div className="hidden lg:flex items-center gap-3">
+            {links.map((link) => (
               <Link
-                key={item.to}
-                to={item.to}
-                className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
-                  pathname === item.to
-                    ? 'bg-navy text-white'
-                    : 'text-gray-600 hover:text-navy hover:bg-gray-100'
-                }`}
+                key={link.to}
+                to={link.to}
+                className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-150"
               >
-                {item.label}
+                {link.label}
               </Link>
             ))}
 
+            <div className="w-px h-4 bg-white/20 mx-1" />
+
             {isAuthenticated ? (
-              <div className="ml-4 flex items-center gap-3">
-                <Link to="/profile" className="text-sm text-gray-600 font-medium hover:text-navy hover:underline">
+              <>
+                <Link
+                  to="/profile"
+                  className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                >
                   {company?.name}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-1 text-sm text-gray-500 hover:text-navy"
+                  className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white border border-white/20 px-4 py-2 rounded hover:bg-white/10 transition-colors"
                 >
-                  <LogOut size={15} /> Sign out
+                  <LogOut size={14} /> Sair
                 </button>
-                <Link to="/admin" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy border border-gray-200 rounded px-2.5 py-1.5 hover:border-navy transition-colors">
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white border border-white/20 rounded px-3 py-2 hover:bg-white/10 transition-colors"
+                >
                   <Shield size={13} /> Admin
                 </Link>
-              </div>
+              </>
             ) : (
-              <div className="ml-4 flex items-center gap-2">
-                <Link to="/login" className="px-4 py-2 rounded text-sm font-medium text-gray-600 hover:text-navy hover:bg-gray-100">
-                  Sign In
-                </Link>
-                <Link to="/register" className="btn-primary text-sm py-2">
-                  Join Now
-                </Link>
-                <Link to="/admin" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy border border-gray-200 rounded px-2.5 py-1.5 hover:border-navy transition-colors">
+              <>
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white border border-white/20 rounded px-3 py-2 hover:bg-white/10 transition-colors"
+                >
                   <Shield size={13} /> Admin
                 </Link>
-              </div>
+                <Link
+                  to="/login"
+                  className="text-sm font-medium text-white border border-white/30 px-4 py-2 rounded hover:bg-white/10 transition-colors"
+                >
+                  Entrar
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-sm font-bold bg-arsx text-white px-5 py-2 rounded hover:bg-arsx-light transition-colors"
+                >
+                  Cadastrar
+                </Link>
+              </>
             )}
-          </nav>
+          </div>
 
-          <button className="md:hidden p-2" onClick={() => setOpen(!open)}>
-            {open ? <X size={22} /> : <Menu size={22} />}
+          <button
+            className="lg:hidden text-white p-1"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Menu"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-      </div>
 
-      {open && (
-        <div className="md:hidden border-t border-gray-200 bg-white px-4 py-3 space-y-1">
-          {(isAuthenticated ? NAV_AUTH : NAV_PUBLIC).map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={() => setOpen(false)}
-              className="block px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100"
-            >
-              {item.label}
-            </Link>
-          ))}
-          {isAuthenticated ? (
-            <>
-              <Link to="/profile" onClick={() => setOpen(false)} className="block px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">
-                My Profile
-              </Link>
-              <button
-                onClick={() => { handleLogout(); setOpen(false) }}
-                className="block w-full text-left px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100"
+        {mobileOpen && (
+          <div className="lg:hidden bg-arsx-card border-t border-arsx-border py-3">
+            {links.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="block px-4 py-3 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                onClick={() => setMobileOpen(false)}
               >
-                Sign out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" onClick={() => setOpen(false)} className="block px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">
-                Sign In
+                {link.label}
               </Link>
-              <Link to="/register" onClick={() => setOpen(false)} className="block px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">
-                Register
-              </Link>
-            </>
-          )}
-          <Link
-            to="/admin"
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded text-sm font-medium text-gray-400 hover:bg-gray-100 hover:text-navy"
-          >
-            <Shield size={14} /> Admin
-          </Link>
-        </div>
-      )}
+            ))}
+            <div className="px-4 pt-3 pb-1 flex flex-col gap-2">
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/profile"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-center text-white border border-white/20 py-2.5 rounded text-sm font-medium"
+                  >
+                    {company?.name}
+                  </Link>
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-1.5 text-gray-400 border border-white/10 py-2.5 rounded text-sm"
+                  >
+                    <Shield size={13} /> Admin
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="text-center text-arsx border border-arsx/30 py-2.5 rounded text-sm font-medium"
+                  >
+                    Sair
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-1.5 text-gray-400 border border-white/10 py-2.5 rounded text-sm"
+                  >
+                    <Shield size={13} /> Admin
+                  </Link>
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-center text-white border border-white/30 py-2.5 rounded text-sm font-medium"
+                  >
+                    Entrar
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-center bg-arsx text-white font-bold py-2.5 rounded text-sm"
+                  >
+                    Cadastrar
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   )
 }

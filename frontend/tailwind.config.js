@@ -4,15 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          DEFAULT: '#1B3068',
-          dark: '#122050',
-          light: '#2A4590',
-        },
-        brand: {
-          red: '#C41717',
-          orange: '#F08C00',
-          green: '#2A8B22',
+        arsx: {
+          DEFAULT: '#cc0000',
+          dark: '#7a0000',
+          light: '#e03333',
+          bg: '#0a0a0a',
+          card: '#111111',
+          border: '#2a2a2a',
         },
       },
       fontFamily: {
