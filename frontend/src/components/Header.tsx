@@ -48,8 +48,8 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          <Link to="/" className="text-2xl font-black tracking-tight text-white">
-            ARS<span className="text-arsx">X</span>
+          <Link to="/">
+            <img src="/logo.png" alt="ARSX" className="h-10 w-auto" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-3">
