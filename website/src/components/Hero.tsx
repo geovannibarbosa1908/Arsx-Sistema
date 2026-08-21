@@ -39,6 +39,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative flex-1 flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-10">
+        <img src="/logo.png" alt="ARSX" className="h-20 w-auto mb-8" />
         <p className="text-[#cc0000] text-sm font-semibold uppercase tracking-[0.2em] mb-4">
           Trading Company · Estados Unidos
         </p>
