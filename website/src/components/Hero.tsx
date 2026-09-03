@@ -41,18 +41,17 @@ export default function Hero() {
       <div className="relative flex-1 flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-10">
         <img src="/logo.png" alt="ARSX" className="h-20 w-auto mb-8" />
         <p className="text-[#cc0000] text-sm font-semibold uppercase tracking-[0.2em] mb-4">
-          Trading Company · Estados Unidos
+          Diplomacia Empresarial · Presença Global
         </p>
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight text-white max-w-4xl" style={{ textShadow: '0 2px 16px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)' }}>
-          SEU PARCEIRO<br />COMPLETO{' '}
-          <span className="text-[#cc0000]">TRADING</span><br />
-          COMPANY NOS{' '}
-          <span className="text-[#cc0000]">EUA</span>
-          <span className="text-2xl ml-2">🇺🇸</span>
+          SUA EMPRESA,<br />NOSSA{' '}
+          <span className="text-[#cc0000]">DIPLOMACIA</span>,<br />
+          ALCANCE{' '}
+          <span className="text-[#cc0000]">GLOBAL</span>
         </h1>
         <p className="mt-6 text-gray-200 text-lg max-w-xl leading-relaxed" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.9)' }}>
-          Conectando o mundo com os <span className="text-[#cc0000] font-semibold">Estados Unidos</span> —
-          estratégia local, visão global, impacto real.
+          Conectamos negócios com os maiores fornecedores do mundo —
+          estratégia, <span className="text-[#cc0000] font-semibold">supply chain</span> e expansão internacional.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
           <a href="#quem-somos" className="btn-green text-base">
