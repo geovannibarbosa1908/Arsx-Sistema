@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-arsx-border flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-600">
-          <p>© {new Date().getFullYear()} ARSX Trading Company. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} ARSX Diplomacia Empresarial. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
